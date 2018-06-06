@@ -23,13 +23,14 @@ if windir == None:
   WIN32 = 'NOWIN32'
   LPSOLVE55 = 'lpsolve55/bin/ux64'
   LPSOLVE55_PATH = '%s/liblpsolve55.so' % LPSOLVE55
+  shutil.copyfile(LPSOLVE55_PATH, '/usr/lib')
 else:
   WIN32 = 'WIN32'
   LPSOLVE55 = 'lpsolve55/bin/win32'
   LPSOLVE55_PATH = '%s/lpsolve55.dll' % LPSOLVE55
+  LPSOLVE55_FILENAME = os.path.basename(LPSOLVE55_PATH)
+  shutil.copyfile(LPSOLVE55_PATH, LPSOLVE55_FILENAME)
 
-LPSOLVE55_LIB = os.path.basename(LPSOLVE55_PATH)
-shutil.copyfile(LPSOLVE55_PATH, LPSOLVE55_LIB)
 
 setup (name = "lpsolve55",
        version = "5.5.2.5",
@@ -50,5 +51,10 @@ setup (name = "lpsolve55",
 		      ]
 )
 
-os.remove(LPSOLVE55_LIB)
-shutil.rmtree('build')
+
+try:
+    if LPSOLVE55_FILENAME:
+        os.remove(LPSOLVE55_FILENAME)
+    shutil.rmtree('build')
+except:
+    pass
