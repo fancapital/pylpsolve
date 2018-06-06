@@ -910,7 +910,7 @@ cdef class LP(object):
         elif type(idx) is list:
             try:
                 ar_idx = array(idx,dtype=npint)
-            except Exception, e:
+            except Exception as e:
                 raise ValueError("Error converting index list to 1d integer array: %s" % str(e))
             
             if ar_idx.ndim != 1:
